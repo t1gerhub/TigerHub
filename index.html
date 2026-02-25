@@ -248,9 +248,9 @@
       transform: translateX(-50%) translateY(-40px);
     }
 
-    /* Texto "Novos scripts em Breve!!" abaixo da segunda caixa */
+    /* Texto abaixo da segunda caixa */
     .upcoming-text {
-      margin-top: 40px; /* um pouquinho longe, mas perto o suficiente */
+      margin-top: 40px; /* um pouquinho longe, mas perto */
       font-family: 'Orbitron', sans-serif;
       font-size: clamp(1.4rem, 5vw, 2rem);
       font-weight: 700;
@@ -258,6 +258,8 @@
       text-shadow: 0 0 15px #ff00cc, 0 0 30px #c300ff;
       text-align: center;
       letter-spacing: 0.05em;
+      width: 100%;
+      max-width: 600px;
     }
 
     @media (max-width: 800px) {
@@ -271,7 +273,7 @@
 
   <div class="space-bg"></div>
 
-  <!-- Bolinhas fixas (mesmas posições sempre) -->
+  <!-- Bolinhas fixas -->
   <div class="particles">
     <div class="particle" style="left:5%; top:8%; width:2.8px; height:2.8px;"></div>
     <div class="particle" style="left:12%; top:22%; width:3.2px; height:3.2px;"></div>
@@ -373,7 +375,7 @@
         </div>
       </div>
 
-      <!-- Segunda caixa + texto abaixo -->
+      <!-- Segunda caixa -->
       <div class="card">
         <div class="card-title">
           Blox Fruits Tiger hub
@@ -393,7 +395,7 @@
         </div>
       </div>
 
-      <!-- Texto abaixo da segunda caixa -->
+      <!-- Texto ABAIXO da segunda caixa -->
       <div class="upcoming-text">
         Novos scripts em Breve!!
       </div>
