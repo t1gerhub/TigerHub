@@ -77,7 +77,7 @@
       position: relative;
       z-index: 5;
       width: 100%;
-      padding: 30px 20px 0;
+      padding: 40px 20px 0; /* um pouco mais de espaço no topo também */
       text-align: center;
     }
 
@@ -97,7 +97,7 @@
     .description {
       position: relative;
       z-index: 5;
-      margin-top: 15px; /* um tiquinho pra baixo do Tiger Hub */
+      margin-top: 50px; /* AUMENTADO: agora desce mais um pouco */
       font-family: 'Roboto', sans-serif;
       font-size: clamp(1rem, 4vw, 1.3rem);
       font-weight: 300;
@@ -141,8 +141,11 @@
 
     @media (max-width: 600px) {
       .logo { font-size: clamp(2rem, 9vw, 3rem); }
-      .description { font-size: clamp(0.95rem, 4.5vw, 1.1rem); margin-top: 10px; }
-      .header { padding-top: 25px; }
+      .description { 
+        margin-top: 35px; /* um pouco menos no celular pra não ficar muito separado */
+        font-size: clamp(0.95rem, 4.5vw, 1.1rem); 
+      }
+      .header { padding-top: 30px; }
     }
   </style>
 </head>
