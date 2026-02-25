@@ -20,7 +20,6 @@
       position: relative;
     }
 
-    /* Fundo gradiente + glow */
     .space-bg {
       position: fixed;
       inset: 0;
@@ -50,10 +49,9 @@
 
     @keyframes pulseGlow {
       from { opacity: 0.4; transform: translate(-50%, -50%) scale(0.95); }
-      to   { opacity: 0.8; transform: translate(-50%, -50%) scale(1.35); }
+      to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.35); }
     }
 
-    /* Bolinhas paradas – muitas e em posições diferentes */
     .particles {
       position: fixed;
       inset: 0;
@@ -69,7 +67,6 @@
       opacity: 0.75;
     }
 
-    /* Conteúdo principal com entrada suave */
     .content-wrapper {
       opacity: 0;
       transform: translateY(70px);
@@ -121,7 +118,7 @@
 
     .card {
       width: 280px;
-      min-height: 160px;
+      min-height: 180px;
       background: rgba(25,8,45,0.65);
       border: 1px solid rgba(160,32,240,0.45);
       border-radius: 24px;
@@ -152,7 +149,7 @@
 
     .card-loadstring {
       font-family: 'Roboto Mono', monospace;
-      font-size: clamp(0.95rem, 3vw, 1.05rem);
+      font-size: clamp(0.9rem, 3vw, 1.05rem);
       color: #e0c0ff;
       text-shadow: 0 0 8px rgba(195,0,255,0.5);
       word-break: break-all;
@@ -161,7 +158,7 @@
 
     @media (max-width: 800px) {
       .categories { flex-direction: column; align-items: center; gap: 40px; }
-      .card { width: 90%; max-width: 320px; }
+      .card { width: 90%; max-width: 340px; min-height: 200px; }
     }
   </style>
 </head>
@@ -169,9 +166,8 @@
 
   <div class="space-bg"></div>
 
-  <!-- MUITAS bolinhas paradas em posições diferentes -->
+  <!-- Bolinhas paradas (muitas, como na versão anterior) -->
   <div class="particles">
-    <!-- Bolinhas espalhadas pela tela inteira (posições fixas) -->
     <div class="particle" style="left:5%; top:8%; width:2.8px; height:2.8px;"></div>
     <div class="particle" style="left:12%; top:22%; width:3.2px; height:3.2px;"></div>
     <div class="particle" style="left:18%; top:45%; width:2.5px; height:2.5px;"></div>
@@ -213,7 +209,6 @@
     <div class="particle" style="left:43%; top:22%; width:3.5px; height:3.5px;"></div>
     <div class="particle" style="left:49%; top:68%; width:2.8px; height:2.8px;"></div>
     <div class="particle" style="left:55%; top:40%; width:3.0px; height:3.0px;"></div>
-    <!-- Continuando com mais para ficar bem cheio... -->
     <div class="particle" style="left:61%; top:90%; width:3.3px; height:3.3px;"></div>
     <div class="particle" style="left:67%; top:35%; width:2.6px; height:2.6px;"></div>
     <div class="particle" style="left:73%; top:75%; width:3.4px; height:3.4px;"></div>
@@ -253,6 +248,7 @@
     </div>
 
     <div class="categories">
+      <!-- Primeira caixa (mantida como estava) -->
       <div class="card">
         <div class="card-title">
           FPS DEVOURER<br>TIGE'R HUB
@@ -262,12 +258,24 @@
         </div>
       </div>
 
+      <!-- Segunda caixa -->
       <div class="card">
-        <!-- Segunda caixa -->
+        <div class="card-title">
+          Blox Fruits Tiger hub
+        </div>
+        <div class="card-loadstring">
+          loadstring(game:HttpGet("https://raw.githubusercontent.com/TIGERHUBOFC/Tigerhub/refs/heads/main/.luaU"))()
+        </div>
       </div>
 
+      <!-- Terceira caixa -->
       <div class="card">
-        <!-- Terceira caixa -->
+        <div class="card-title">
+          Tsunami for Brainrot Tiger hub
+        </div>
+        <div class="card-loadstring">
+          loadstring(game:HttpGet("https://pastefy.app/EO1WOk7b/raw"))()
+        </div>
       </div>
     </div>
   </div>
