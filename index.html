@@ -6,7 +6,7 @@
   <title>Tiger Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Roboto:wght@300;400&family=Roboto+Mono&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -18,25 +18,75 @@
     body {
       min-height: 100vh;
       background: #0a0015;
-      overflow-x: hidden;
+      overflow: hidden;
       font-family: 'Orbitron', sans-serif;
       color: #d0c0ff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 60px;
+      position: relative;
     }
 
-    /* Fundo espacial */
-    .space-bg,
-    .stars,
-    .glow {
-      opacity: 0;
-      transform: translateY(40px);
-      animation: siteFadeIn 2.8s ease-out forwards;
-      animation-delay: 0.4s;
+    /* Partículas animadas (bolinhas indo pra baixo e pra cima) */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
     }
 
+    .particle-layer {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+    }
+
+    .particle-layer.down {
+      animation: fallDown 60s linear infinite;
+    }
+
+    .particle-layer.up {
+      animation: riseUp 80s linear infinite;
+    }
+
+    .particle {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      box-shadow: 0 0 6px white;
+    }
+
+    /* Camada caindo (mais densa, mais rápida) */
+    .particle-layer.down .particle {
+      width: 1.5px;
+      height: 1.5px;
+      animation: twinkle 4s infinite alternate;
+    }
+
+    /* Camada subindo (mais lenta, maior) */
+    .particle-layer.up .particle {
+      width: 2px;
+      height: 2px;
+      animation: twinkle 6s infinite alternate;
+    }
+
+    @keyframes fallDown {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    @keyframes riseUp {
+      0% { transform: translateY(100vh); }
+      100% { transform: translateY(-100%); }
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.4; }
+      100% { opacity: 0.9; }
+    }
+
+    /* Fundo espacial gradiente */
     .space-bg {
       position: fixed;
       inset: 0;
@@ -44,34 +94,6 @@
         radial-gradient(circle at 20% 30%, rgba(160, 0, 120, 0.06) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(100, 0, 200, 0.08) 0%, transparent 60%);
       z-index: 1;
-    }
-
-    .stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .stars::before,
-    .stars::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><circle cx="30" cy="50" r="1" fill="white"/><circle cx="110" cy="130" r="0.8" fill="white"/><circle cx="240" cy="80" r="1.1" fill="white"/><circle cx="270" cy="210" r="0.9" fill="white"/></svg>') repeat;
-      opacity: 0.5;
-      animation: drift 180s linear infinite;
-    }
-
-    .stars::after {
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><circle cx="50" cy="100" r="1" fill="white"/><circle cx="170" cy="40" r="0.9" fill="white"/><circle cx="310" cy="170" r="1.2" fill="white"/></svg>') repeat;
-      opacity: 0.35;
-      animation: drift 240s linear infinite reverse;
-    }
-
-    @keyframes drift {
-      from { transform: translate(0, 0); }
-      to   { transform: translate(-120px, -120px); }
     }
 
     .glow {
@@ -127,7 +149,6 @@
       margin-bottom: 60px;
     }
 
-    /* Área das caixas */
     .categories {
       position: relative;
       z-index: 5;
@@ -136,7 +157,7 @@
       justify-content: center;
       gap: 30px;
       max-width: 1200px;
-      padding: 0 20px;
+      padding: 0 20px 60px;
     }
 
     .card {
@@ -180,12 +201,6 @@
       line-height: 1.4;
     }
 
-    /* Animação do fundo */
-    @keyframes siteFadeIn {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
     @media (max-width: 800px) {
       .categories { flex-direction: column; align-items: center; gap: 40px; }
       .card { width: 90%; max-width: 320px; }
@@ -195,7 +210,33 @@
 <body>
 
   <div class="space-bg"></div>
-  <div class="stars"></div>
+
+  <!-- Partículas animadas -->
+  <div class="particles">
+    <div class="particle-layer down">
+      <!-- Bolinhas caindo -->
+      <div class="particle" style="left: 10%; top: -10px; animation-delay: 0s;"></div>
+      <div class="particle" style="left: 25%; top: -20px; animation-delay: 3s;"></div>
+      <div class="particle" style="left: 40%; top: -15px; animation-delay: 7s;"></div>
+      <div class="particle" style="left: 55%; top: -30px; animation-delay: 12s;"></div>
+      <div class="particle" style="left: 70%; top: -5px; animation-delay: 18s;"></div>
+      <div class="particle" style="left: 85%; top: -25px; animation-delay: 24s;"></div>
+      <div class="particle" style="left: 15%; top: -40px; animation-delay: 30s;"></div>
+      <div class="particle" style="left: 30%; top: -10px; animation-delay: 35s;"></div>
+    </div>
+
+    <div class="particle-layer up">
+      <!-- Bolinhas subindo -->
+      <div class="particle" style="left: 20%; bottom: -10px; animation-delay: 2s;"></div>
+      <div class="particle" style="left: 35%; bottom: -25px; animation-delay: 8s;"></div>
+      <div class="particle" style="left: 50%; bottom: -15px; animation-delay: 14s;"></div>
+      <div class="particle" style="left: 65%; bottom: -35px; animation-delay: 20s;"></div>
+      <div class="particle" style="left: 80%; bottom: -10px; animation-delay: 26s;"></div>
+      <div class="particle" style="left: 10%; bottom: -30px; animation-delay: 32s;"></div>
+      <div class="particle" style="left: 45%; bottom: -20px; animation-delay: 38s;"></div>
+    </div>
+  </div>
+
   <div class="glow"></div>
 
   <div class="header">
@@ -208,7 +249,6 @@
   </div>
 
   <div class="categories">
-    <!-- Primeira caixa -->
     <div class="card">
       <div class="card-title">
         FPS DEVOURER<br>TIGE'R HUB
@@ -218,14 +258,12 @@
       </div>
     </div>
 
-    <!-- Segunda caixa (vazia) -->
     <div class="card">
-      <!-- Coloque o conteúdo aqui depois -->
+      <!-- Segunda caixa -->
     </div>
 
-    <!-- Terceira caixa (vazia) -->
     <div class="card">
-      <!-- Coloque o conteúdo aqui depois -->
+      <!-- Terceira caixa -->
     </div>
   </div>
 
