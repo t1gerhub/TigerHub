@@ -26,7 +26,15 @@
       align-items: center;
     }
 
-    /* Fundo espacial com gradiente sutil e estrelas */
+    /* Fundo espacial */
+    .space-bg,
+    .stars,
+    .glow {
+      opacity: 0;
+      animation: siteFadeIn 2.5s ease-out forwards;
+      animation-delay: 0.3s; /* começa um pouquinho depois */
+    }
+
     .space-bg {
       position: fixed;
       inset: 0;
@@ -68,24 +76,35 @@
       position: relative;
       z-index: 5;
       width: 100%;
-      padding: 30px 20px 0;
+      padding: 25px 20px 0;
       text-align: center;
     }
 
     .logo {
-      font-size: clamp(2.2rem, 8vw, 3.8rem); /* pequeno/médio, não grande */
+      font-size: clamp(2.2rem, 7vw, 3.5rem); /* pequeno, não grande */
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       background: linear-gradient(90deg, #c300ff, #a020f0, #ff00cc);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-shadow: 
-        0 0 15px #c300ff80,
-        0 0 30px #a020f0aa;
+        0 0 12px #c300ff70,
+        0 0 25px #a020f0aa;
     }
 
-    /* Glow orbital suave no fundo */
+    /* Animação só para o fundo/site (fade + leve slide de baixo) */
+    @keyframes siteFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .glow {
       position: absolute;
       width: 600px;
@@ -107,7 +126,7 @@
 
     @media (max-width: 600px) {
       .logo {
-        font-size: clamp(2rem, 10vw, 3rem);
+        font-size: clamp(2rem, 9vw, 3rem);
       }
       .header {
         padding-top: 20px;
