@@ -118,7 +118,7 @@
 
     .card {
       width: 280px;
-      min-height: 220px;
+      min-height: 240px;
       background: rgba(25,8,45,0.65);
       border: 1px solid rgba(160,32,240,0.45);
       border-radius: 24px;
@@ -153,7 +153,7 @@
       text-shadow: 0 0 8px rgba(195,0,255,0.5);
       word-break: break-all;
       line-height: 1.4;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .copy-btn {
@@ -221,12 +221,12 @@
       background: #f0f0f0;
     }
 
-    /* Animação do "Copiado!!" – agora fica 3 segundos */
+    /* Texto "Copiado!!" – aparece de baixo, fica parado 4.5s, depois sobe sumindo */
     .copied {
       position: absolute;
-      bottom: 100%; /* começa embaixo do botão */
+      bottom: -40px; /* começa escondido abaixo do botão */
       left: 50%;
-      transform: translateX(-50%) translateY(30px);
+      transform: translateX(-50%) translateY(20px);
       background: rgba(0, 220, 0, 0.95);
       color: white;
       padding: 8px 18px;
@@ -241,17 +241,18 @@
 
     .copied.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(-15px);
+      transform: translateX(-50%) translateY(0); /* posição final parada abaixo do botão */
     }
 
     .copied.hide {
       opacity: 0;
-      transform: translateX(-50%) translateY(-60px);
+      transform: translateX(-50%) translateY(-40px); /* sobe e some */
     }
 
     @media (max-width: 800px) {
       .categories { flex-direction: column; align-items: center; gap: 40px; }
-      .card { width: 90%; max-width: 340px; min-height: 240px; }
+      .card { width: 90%; max-width: 340px; min-height: 260px; }
+      .copied { font-size: 1rem; padding: 6px 14px; }
     }
   </style>
 </head>
@@ -259,11 +260,11 @@
 
   <div class="space-bg"></div>
 
-  <!-- Bolinhas paradas (mantidas como antes) -->
+  <!-- Bolinhas paradas (mantidas) -->
   <div class="particles">
     <div class="particle" style="left:5%; top:8%; width:2.8px; height:2.8px;"></div>
     <div class="particle" style="left:12%; top:22%; width:3.2px; height:3.2px;"></div>
-    <!-- ... (muitas bolinhas iguais à versão anterior) -->
+    <!-- ... (as mesmas bolinhas da versão anterior) -->
     <div class="particle" style="left:15%; top:60%; width:3.4px; height:3.4px;"></div>
   </div>
 
@@ -288,14 +289,16 @@
         <div class="card-loadstring" id="script1">
           loadstring(game:HttpGet("https://pastefy.app/eHwxcO3x/raw"))()
         </div>
-        <button class="copy-btn" onclick="copyScript('script1', this)">
-          <span class="copy-icon">
-            <div class="sheet1"></div>
-            <div class="sheet2"></div>
-          </span>
-          Copiar Script
+        <div style="position: relative;">
+          <button class="copy-btn" onclick="copyScript('script1', this)">
+            <span class="copy-icon">
+              <div class="sheet1"></div>
+              <div class="sheet2"></div>
+            </span>
+            Copiar Script
+          </button>
           <span class="copied">Copiado!!</span>
-        </button>
+        </div>
       </div>
 
       <!-- Segunda caixa -->
@@ -306,14 +309,16 @@
         <div class="card-loadstring" id="script2">
           loadstring(game:HttpGet("https://raw.githubusercontent.com/TIGERHUBOFC/Tigerhub/refs/heads/main/.luaU"))()
         </div>
-        <button class="copy-btn" onclick="copyScript('script2', this)">
-          <span class="copy-icon">
-            <div class="sheet1"></div>
-            <div class="sheet2"></div>
-          </span>
-          Copiar Script
+        <div style="position: relative;">
+          <button class="copy-btn" onclick="copyScript('script2', this)">
+            <span class="copy-icon">
+              <div class="sheet1"></div>
+              <div class="sheet2"></div>
+            </span>
+            Copiar Script
+          </button>
           <span class="copied">Copiado!!</span>
-        </button>
+        </div>
       </div>
 
       <!-- Terceira caixa -->
@@ -324,14 +329,16 @@
         <div class="card-loadstring" id="script3">
           loadstring(game:HttpGet("https://pastefy.app/EO1WOk7b/raw"))()
         </div>
-        <button class="copy-btn" onclick="copyScript('script3', this)">
-          <span class="copy-icon">
-            <div class="sheet1"></div>
-            <div class="sheet2"></div>
-          </span>
-          Copiar Script
+        <div style="position: relative;">
+          <button class="copy-btn" onclick="copyScript('script3', this)">
+            <span class="copy-icon">
+              <div class="sheet1"></div>
+              <div class="sheet2"></div>
+            </span>
+            Copiar Script
+          </button>
           <span class="copied">Copiado!!</span>
-        </button>
+        </div>
       </div>
     </div>
   </div>
@@ -340,23 +347,22 @@
     function copyScript(elementId, button) {
       const textElement = document.getElementById(elementId);
       const text = textElement.innerText.trim();
-      
+      const copiedMsg = button.parentElement.querySelector('.copied');
+
       navigator.clipboard.writeText(text).then(() => {
-        const copiedMsg = button.querySelector('.copied');
-        
-        // Mostra com animação de baixo pra cima
+        // Mostra o texto subindo e parando abaixo do botão
         copiedMsg.classList.add('show');
-        
-        // Agora fica 3 segundos visível
+
+        // Fica 4.5 segundos visível
         setTimeout(() => {
           copiedMsg.classList.remove('show');
           copiedMsg.classList.add('hide');
-          
-          // Remove a classe hide depois da animação pra reutilizar
+
+          // Remove a classe hide depois da animação de sumiço
           setTimeout(() => {
             copiedMsg.classList.remove('hide');
           }, 800);
-        }, 3000); // ← aqui é o tempo que fica visível (3000 ms = 3 segundos)
+        }, 4500); // ← 4.5 segundos visível
       }).catch(err => {
         console.error('Erro ao copiar: ', err);
       });
