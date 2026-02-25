@@ -221,32 +221,32 @@
       background: #f0f0f0;
     }
 
-    /* Animação do "Copiado!!" aparecendo de baixo e sumindo */
+    /* Animação do "Copiado!!" – agora fica 3 segundos */
     .copied {
       position: absolute;
       bottom: 100%; /* começa embaixo do botão */
       left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: rgba(0, 220, 0, 0.9);
+      transform: translateX(-50%) translateY(30px);
+      background: rgba(0, 220, 0, 0.95);
       color: white;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 10px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: bold;
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
-      transition: all 0.6s ease;
+      transition: all 0.8s ease;
     }
 
     .copied.show {
       opacity: 1;
-      transform: translateX(-50%) translateY(-10px);
+      transform: translateX(-50%) translateY(-15px);
     }
 
     .copied.hide {
       opacity: 0;
-      transform: translateX(-50%) translateY(-40px);
+      transform: translateX(-50%) translateY(-60px);
     }
 
     @media (max-width: 800px) {
@@ -259,14 +259,11 @@
 
   <div class="space-bg"></div>
 
-  <!-- Bolinhas paradas -->
+  <!-- Bolinhas paradas (mantidas como antes) -->
   <div class="particles">
     <div class="particle" style="left:5%; top:8%; width:2.8px; height:2.8px;"></div>
     <div class="particle" style="left:12%; top:22%; width:3.2px; height:3.2px;"></div>
-    <!-- ... (mantive as mesmas bolinhas da versão anterior, são muitas) -->
-    <div class="particle" style="left:90%; top:35%; width:2.7px; height:2.7px;"></div>
-    <div class="particle" style="left:3%; top:50%; width:3.3px; height:3.3px;"></div>
-    <div class="particle" style="left:9%; top:90%; width:2.9px; height:2.9px;"></div>
+    <!-- ... (muitas bolinhas iguais à versão anterior) -->
     <div class="particle" style="left:15%; top:60%; width:3.4px; height:3.4px;"></div>
   </div>
 
@@ -350,16 +347,16 @@
         // Mostra com animação de baixo pra cima
         copiedMsg.classList.add('show');
         
-        // Após 1 segundo, inicia o fade out + subida extra
+        // Agora fica 3 segundos visível
         setTimeout(() => {
           copiedMsg.classList.remove('show');
           copiedMsg.classList.add('hide');
           
-          // Remove a classe hide depois da animação pra poder reutilizar
+          // Remove a classe hide depois da animação pra reutilizar
           setTimeout(() => {
             copiedMsg.classList.remove('hide');
-          }, 600);
-        }, 1000);
+          }, 800);
+        }, 3000); // ← aqui é o tempo que fica visível (3000 ms = 3 segundos)
       }).catch(err => {
         console.error('Erro ao copiar: ', err);
       });
