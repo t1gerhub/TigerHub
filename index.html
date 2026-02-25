@@ -27,7 +27,7 @@
       position: relative;
     }
 
-    /* Partículas animadas (bolinhas indo pra baixo e pra cima) */
+    /* Partículas visíveis desde o início */
     .particles {
       position: fixed;
       inset: 0;
@@ -35,58 +35,44 @@
       z-index: 2;
     }
 
-    .particle-layer {
-      position: absolute;
-      inset: 0;
-      background: transparent;
-    }
-
-    .particle-layer.down {
-      animation: fallDown 60s linear infinite;
-    }
-
-    .particle-layer.up {
-      animation: riseUp 80s linear infinite;
-    }
-
     .particle {
       position: absolute;
       background: white;
       border-radius: 50%;
+      box-shadow: 0 0 6px rgba(255,255,255,0.8);
       opacity: 0.7;
-      box-shadow: 0 0 6px white;
     }
 
-    /* Camada caindo (mais densa, mais rápida) */
-    .particle-layer.down .particle {
-      width: 1.5px;
-      height: 1.5px;
-      animation: twinkle 4s infinite alternate;
+    /* Bolinhas caindo (visíveis na tela inicial) */
+    .particle.down {
+      width: 1.2px;
+      height: 1.2px;
+      animation: fall linear infinite, twinkle 3s infinite alternate;
     }
 
-    /* Camada subindo (mais lenta, maior) */
-    .particle-layer.up .particle {
-      width: 2px;
-      height: 2px;
-      animation: twinkle 6s infinite alternate;
+    /* Bolinhas subindo */
+    .particle.up {
+      width: 1.8px;
+      height: 1.8px;
+      animation: rise linear infinite, twinkle 5s infinite alternate;
     }
 
-    @keyframes fallDown {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100vh); }
+    @keyframes fall {
+      0% { transform: translateY(-20vh); }
+      100% { transform: translateY(120vh); }
     }
 
-    @keyframes riseUp {
-      0% { transform: translateY(100vh); }
-      100% { transform: translateY(-100%); }
+    @keyframes rise {
+      0% { transform: translateY(120vh); }
+      100% { transform: translateY(-20vh); }
     }
 
     @keyframes twinkle {
       0% { opacity: 0.4; }
-      100% { opacity: 0.9; }
+      100% { opacity: 0.85; }
     }
 
-    /* Fundo espacial gradiente */
+    /* Fundo gradiente + glow */
     .space-bg {
       position: fixed;
       inset: 0;
@@ -94,6 +80,9 @@
         radial-gradient(circle at 20% 30%, rgba(160, 0, 120, 0.06) 0%, transparent 50%),
         radial-gradient(circle at 80% 70%, rgba(100, 0, 200, 0.08) 0%, transparent 60%);
       z-index: 1;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 3s ease-out forwards;
     }
 
     .glow {
@@ -108,13 +97,20 @@
       animation: pulseGlow 14s ease-in-out infinite alternate;
       pointer-events: none;
       z-index: 3;
+      opacity: 0;
+      animation: fadeIn 3s ease-out forwards 0.5s;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes pulseGlow {
       from { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9); }
-      to   { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+      to { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
     }
 
+    /* Conteúdo principal */
     .header {
       position: relative;
       z-index: 5;
@@ -211,30 +207,24 @@
 
   <div class="space-bg"></div>
 
-  <!-- Partículas animadas -->
+  <!-- Partículas (bolinhas) -->
   <div class="particles">
-    <div class="particle-layer down">
-      <!-- Bolinhas caindo -->
-      <div class="particle" style="left: 10%; top: -10px; animation-delay: 0s;"></div>
-      <div class="particle" style="left: 25%; top: -20px; animation-delay: 3s;"></div>
-      <div class="particle" style="left: 40%; top: -15px; animation-delay: 7s;"></div>
-      <div class="particle" style="left: 55%; top: -30px; animation-delay: 12s;"></div>
-      <div class="particle" style="left: 70%; top: -5px; animation-delay: 18s;"></div>
-      <div class="particle" style="left: 85%; top: -25px; animation-delay: 24s;"></div>
-      <div class="particle" style="left: 15%; top: -40px; animation-delay: 30s;"></div>
-      <div class="particle" style="left: 30%; top: -10px; animation-delay: 35s;"></div>
-    </div>
+    <!-- Caindo (já visíveis na tela) -->
+    <div class="particle down" style="left: 8%; top: 10%; animation-duration: 45s; animation-delay: -5s;"></div>
+    <div class="particle down" style="left: 22%; top: 35%; animation-duration: 50s; animation-delay: -12s;"></div>
+    <div class="particle down" style="left: 38%; top: 60%; animation-duration: 55s; animation-delay: -20s;"></div>
+    <div class="particle down" style="left: 55%; top: 15%; animation-duration: 48s; animation-delay: -8s;"></div>
+    <div class="particle down" style="left: 72%; top: 45%; animation-duration: 52s; animation-delay: -15s;"></div>
+    <div class="particle down" style="left: 88%; top: 70%; animation-duration: 60s; animation-delay: -25s;"></div>
+    <div class="particle down" style="left: 15%; top: 25%; animation-duration: 58s; animation-delay: -18s;"></div>
 
-    <div class="particle-layer up">
-      <!-- Bolinhas subindo -->
-      <div class="particle" style="left: 20%; bottom: -10px; animation-delay: 2s;"></div>
-      <div class="particle" style="left: 35%; bottom: -25px; animation-delay: 8s;"></div>
-      <div class="particle" style="left: 50%; bottom: -15px; animation-delay: 14s;"></div>
-      <div class="particle" style="left: 65%; bottom: -35px; animation-delay: 20s;"></div>
-      <div class="particle" style="left: 80%; bottom: -10px; animation-delay: 26s;"></div>
-      <div class="particle" style="left: 10%; bottom: -30px; animation-delay: 32s;"></div>
-      <div class="particle" style="left: 45%; bottom: -20px; animation-delay: 38s;"></div>
-    </div>
+    <!-- Subindo (já visíveis na tela) -->
+    <div class="particle up" style="left: 12%; top: 80%; animation-duration: 70s; animation-delay: -10s;"></div>
+    <div class="particle up" style="left: 28%; top: 65%; animation-duration: 75s; animation-delay: -22s;"></div>
+    <div class="particle up" style="left: 45%; top: 90%; animation-duration: 80s; animation-delay: -30s;"></div>
+    <div class="particle up" style="left: 62%; top: 50%; animation-duration: 68s; animation-delay: -14s;"></div>
+    <div class="particle up" style="left: 78%; top: 75%; animation-duration: 72s; animation-delay: -26s;"></div>
+    <div class="particle up" style="left: 18%; top: 55%; animation-duration: 78s; animation-delay: -35s;"></div>
   </div>
 
   <div class="glow"></div>
