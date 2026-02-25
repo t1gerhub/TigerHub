@@ -118,7 +118,7 @@
 
     .card {
       width: 280px;
-      min-height: 180px;
+      min-height: 200px;
       background: rgba(25,8,45,0.65);
       border: 1px solid rgba(160,32,240,0.45);
       border-radius: 24px;
@@ -127,7 +127,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       text-align: center;
       box-shadow: 0 0 30px rgba(160,32,240,0.3);
       transition: all 0.3s ease;
@@ -144,21 +143,102 @@
       font-weight: 700;
       color: #ffddff;
       text-shadow: 0 0 12px #c300ff, 0 0 20px #a020f0;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .card-loadstring {
       font-family: 'Roboto Mono', monospace;
-      font-size: clamp(0.9rem, 3vw, 1.05rem);
+      font-size: clamp(0.9rem, 3vw, 1.0rem);
       color: #e0c0ff;
       text-shadow: 0 0 8px rgba(195,0,255,0.5);
       word-break: break-all;
       line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .copy-btn {
+      position: relative;
+      background: linear-gradient(135deg, #8e44ad, #9b59ff);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(155,89,255,0.7);
+    }
+
+    .copy-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #c300ff, #ff00cc);
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: -1;
+    }
+
+    .copy-btn:hover::before {
+      opacity: 0.3;
+    }
+
+    .copy-icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    .copy-icon .sheet1,
+    .copy-icon .sheet2 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .copy-icon .sheet1 {
+      transform: rotate(-8deg) translate(-4px, 2px);
+      z-index: 1;
+    }
+
+    .copy-icon .sheet2 {
+      transform: rotate(8deg) translate(4px, -2px);
+      z-index: 2;
+      background: #f0f0f0;
+    }
+
+    .copied {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,200,0,0.9);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
     }
 
     @media (max-width: 800px) {
       .categories { flex-direction: column; align-items: center; gap: 40px; }
-      .card { width: 90%; max-width: 340px; min-height: 200px; }
+      .card { width: 90%; max-width: 340px; min-height: 220px; }
     }
   </style>
 </head>
@@ -166,7 +246,7 @@
 
   <div class="space-bg"></div>
 
-  <!-- Bolinhas paradas (muitas, como na versão anterior) -->
+  <!-- Bolinhas paradas -->
   <div class="particles">
     <div class="particle" style="left:5%; top:8%; width:2.8px; height:2.8px;"></div>
     <div class="particle" style="left:12%; top:22%; width:3.2px; height:3.2px;"></div>
@@ -248,14 +328,22 @@
     </div>
 
     <div class="categories">
-      <!-- Primeira caixa (mantida como estava) -->
+      <!-- Primeira caixa -->
       <div class="card">
         <div class="card-title">
           FPS DEVOURER<br>TIGE'R HUB
         </div>
-        <div class="card-loadstring">
+        <div class="card-loadstring" id="script1">
           loadstring(game:HttpGet("https://pastefy.app/eHwxcO3x/raw"))()
         </div>
+        <button class="copy-btn" onclick="copyToClipboard('script1', this)">
+          <span class="copy-icon">
+            <div class="sheet1"></div>
+            <div class="sheet2"></div>
+          </span>
+          Copiar Script
+          <span class="copied">Copiado!</span>
+        </button>
       </div>
 
       <!-- Segunda caixa -->
@@ -263,9 +351,17 @@
         <div class="card-title">
           Blox Fruits Tiger hub
         </div>
-        <div class="card-loadstring">
+        <div class="card-loadstring" id="script2">
           loadstring(game:HttpGet("https://raw.githubusercontent.com/TIGERHUBOFC/Tigerhub/refs/heads/main/.luaU"))()
         </div>
+        <button class="copy-btn" onclick="copyToClipboard('script2', this)">
+          <span class="copy-icon">
+            <div class="sheet1"></div>
+            <div class="sheet2"></div>
+          </span>
+          Copiar Script
+          <span class="copied">Copiado!</span>
+        </button>
       </div>
 
       <!-- Terceira caixa -->
@@ -273,12 +369,35 @@
         <div class="card-title">
           Tsunami for Brainrot Tiger hub
         </div>
-        <div class="card-loadstring">
+        <div class="card-loadstring" id="script3">
           loadstring(game:HttpGet("https://pastefy.app/EO1WOk7b/raw"))()
         </div>
+        <button class="copy-btn" onclick="copyToClipboard('script3', this)">
+          <span class="copy-icon">
+            <div class="sheet1"></div>
+            <div class="sheet2"></div>
+          </span>
+          Copiar Script
+          <span class="copied">Copiado!</span>
+        </button>
       </div>
     </div>
   </div>
+
+  <script>
+    function copyToClipboard(elementId, button) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const copiedMsg = button.querySelector('.copied');
+        copiedMsg.style.opacity = '1';
+        setTimeout(() => {
+          copiedMsg.style.opacity = '0';
+        }, 2000);
+      }).catch(err => {
+        console.error('Erro ao copiar: ', err);
+      });
+    }
+  </script>
 
 </body>
 </html>
